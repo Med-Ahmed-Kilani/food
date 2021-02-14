@@ -13,6 +13,7 @@ const SearchBar = ({term, onTermChange, onTermSubmit}) => {
                 autoFocus={true} 
                 autoCapitalize='none'
                 autoCorrect={false}
+                value={term}
                 onChangeText={(value)=>{onTermChange(value)}} 
                 onEndEditing={onTermSubmit}
             />
@@ -25,10 +26,10 @@ const styles = StyleSheet.create({
     container : {
         flexDirection:'row',
         height:50,
-        width:'90%',
+        width:'94%',
         backgroundColor:'#E1DDDD',
         borderRadius:20,
-        marginHorizontal:'5%',
+        marginHorizontal:'3%',
         marginVertical:10,
         alignItems:'center'
     },

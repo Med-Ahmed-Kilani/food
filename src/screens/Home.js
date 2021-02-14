@@ -1,35 +1,31 @@
 import React, { useState } from 'react'
-import {Text, StyleSheet, View} from 'react-native' 
-import SearchBar from '../components/SearchBar';
-import yelp from '../api/yelp'
+import {Text, StyleSheet, View, ScrollView} from 'react-native' 
+import SearchBar from '../components/SearchBar'
+import useRestaurants from '../hooks/useRestaurants'
+import RestaurantsList from '../components/RestaurantsList'
 
 const Home = () => {
     const [term, setTerm] = useState('')
-    const [restaurants, setRestaurants] = useState([])
-    const [errorMessage, setErrorMessage] = useState('')
+    const [errorMessage, restaurants, searchApi] = useRestaurants()
 
-    const searchApi = async ( ) => {
-        try {
-            const getRespond = await yelp.get('/search',{
-                params:{
-                    limit:50,
-                    term,
-                    location:'san jose'}
-            })
-            setRestaurants(getRespond.data.businesses) 
-            setErrorMessage('')   
-        } catch (error) {
-            setErrorMessage('Something went wrong!')
-        }
-        
+    const filterResultByPrice = (price) =>{
+        return restaurants.filter(result => {
+            return result.price === price
+        })
     }
 
-    return<View>
+    return<View style={{flex:1}}>
         <SearchBar 
-            onTermChange={(term)=>{setTerm(term)}} 
-            onTermSubmit={searchApi}
+            term={term}
+            onTermChange={setTerm} 
+            onTermSubmit={()=>{searchApi(term)}}
         />
-        {errorMessage? <Text>{errorMessage}</Text> :<Text>We have found {restaurants.length} restaurants</Text>}
+        {errorMessage? <Text>{errorMessage}</Text> : null }
+        <ScrollView>
+            <RestaurantsList results={filterResultByPrice('$')} title='Cost effective' />
+            <RestaurantsList results={filterResultByPrice('$$')} title='Bit pricier' />
+            <RestaurantsList results={filterResultByPrice('$$$')} title='Big spender' />
+        </ScrollView>
     </View>
 }
 
