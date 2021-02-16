@@ -19,7 +19,6 @@ const RestaurantShow = ({route}) => {
     }
 
     return<>
-            <Text style={{alignSelf:'center', fontSize:20, fontWeight:'bold'}}>{'To Samar '}<Entypo style={{fontSize:20}} name='heart'/></Text>
             <Text style={{alignSelf:'center', marginVertical:5}} >{result.name}</Text>
             <FlatList
                 data={result.photos}
