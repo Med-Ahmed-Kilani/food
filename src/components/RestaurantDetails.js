@@ -11,13 +11,13 @@ const RestaurantDetails = ({ result }) => {
 
 const styles = StyleSheet.create({
     imageStyle:{
-        height:170,
+        height:150,
         width:250,
-        marginVertical:10
+        marginVertical:10,
     }, 
     nameStyle:{
         fontWeight:'bold',
-    }
+    },
 })
 
 export default RestaurantDetails

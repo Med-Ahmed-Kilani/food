@@ -4,7 +4,7 @@ import SearchBar from '../components/SearchBar'
 import useRestaurants from '../hooks/useRestaurants'
 import RestaurantsList from '../components/RestaurantsList'
 
-const Home = () => {
+const Home = ({ navigation }) => {
     const [term, setTerm] = useState('')
     const [errorMessage, restaurants, searchApi] = useRestaurants()
 
@@ -20,11 +20,11 @@ const Home = () => {
             onTermChange={setTerm} 
             onTermSubmit={()=>{searchApi(term)}}
         />
-        {errorMessage? <Text>{errorMessage}</Text> : null }
+        {errorMessage? <Text style={{color:'red', alignSelf:'center'}}>{errorMessage}</Text> : null }
         <ScrollView>
-            <RestaurantsList results={filterResultByPrice('$')} title='Cost effective' />
-            <RestaurantsList results={filterResultByPrice('$$')} title='Bit pricier' />
-            <RestaurantsList results={filterResultByPrice('$$$')} title='Big spender' />
+            <RestaurantsList navigation={navigation} results={filterResultByPrice('$')} title='Cost effective' />
+            <RestaurantsList navigation={navigation} results={filterResultByPrice('$$')} title='Bit pricier' />
+            <RestaurantsList navigation={navigation} results={filterResultByPrice('$$$')} title='Big spender' />
         </ScrollView>
     </View>
 }
